@@ -1,14 +1,34 @@
 import "./App.css";
+
 import MainPage from "./main";
-import { Route, Routes } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  Link,
+  useNavigate,
+  useNavigation,
+} from "react-router-dom";
+
 import ProductPage from "./product";
 import UploadPage from "./upload";
+
+import { Button } from "antd";
+import { DownloadOutlined } from "@ant-design/icons";
 function App() {
+  const navigate = useNavigate();
+  const uploadPage = () => {
+    navigate("/upload");
+  };
   return (
     <div>
       <div id="header">
         <div id="header-area">
-          <img src="images/icons/logo.png" />
+          <Link to="/">
+            <img src="/images/icons/logo.png" />
+          </Link>
+          <Button size="large" icon={<DownloadOutlined />} onClick={uploadPage}>
+            상품 업로드
+          </Button>
         </div>
       </div>
       <div id="body">
