@@ -1,9 +1,75 @@
 import React from "react";
-
+import { Form, Divider, Input, InputNumber, Button, Upload } from "antd";
+import "./index.css";
 const UploadPage = () => {
+  const onSubmit = (value) => {
+    console.log(value);
+  };
   return (
-    <div>
-      <h1>상품 업로드 페이지입니다.</h1>
+    <div id="upload-container">
+      <Form name="상품 업로드" onFinish={onSubmit}>
+        <Form.Item
+          name="upload"
+          size="large"
+          label={<div className="upload-label">이미지</div>}
+        >
+          <div id="upload-img-placeholder">
+            <img src="/images/icons/camera.png" />
+            <span>이미지를 업로드 해주세요.</span>
+          </div>
+        </Form.Item>
+        <Divider />
+        <Form.Item
+          name="seller"
+          rules={[{ required: true, message: "판매자 이름을 입력해주세요." }]}
+          label={<div className="upload-label">판매자 명</div>}
+        >
+          <Input
+            className="upload-name"
+            size="large"
+            placeholder="이름을 입력해주세요."
+          />
+        </Form.Item>
+        <Divider />
+        <Form.Item
+          name="name"
+          rules={[{ required: true, message: "상품 이름을 입력해주세요." }]}
+          label={<div className="upload-label">상품 이름</div>}
+        >
+          <Input
+            className="upload-name"
+            size="large"
+            placeholder="상품 이름을 입력해주세요."
+          />
+        </Form.Item>
+        <Divider />
+        <Form.Item
+          name="price"
+          label={<div className="upload-label">상품 가격</div>}
+          rules={[{ required: true, message: "상품 가격을 입력해주세요" }]}
+        >
+          <InputNumber defaultValue={0} className="upload-price" size="large" />
+        </Form.Item>
+        <Divider />
+        <Form.Item
+          name="description"
+          rules={[{ required: true, message: "상품 설명을 입력해주세요." }]}
+          label={<div className="upload-label">상품 설명</div>}
+        >
+          <Input.TextArea
+            size="large"
+            id="product-description"
+            showCount
+            maxLength={300}
+            placeholder="상품 소개를 적어주세요."
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button htmlType="submit" id="submit-button" size="large">
+            등록하기
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 };
