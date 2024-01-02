@@ -1,10 +1,51 @@
 import React from "react";
-import { Form, Divider, Input, InputNumber, Button, Upload } from "antd";
+import {
+  Form,
+  Divider,
+  Input,
+  InputNumber,
+  Button,
+  Upload,
+  message,
+} from "antd";
 import "./index.css";
-const UploadPage = () => {
-  const onSubmit = (value) => {
-    console.log(value);
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { API_URL } from "../config/constants";
+import axios from "axios";
+
+function UploadPage() {
+  const [imageUrl, setImageUrl] = useState(null);
+  const navigate = useNavigate();
+  const onSubmit = (values) => {
+    axios
+      .post(`${API_URL}/products`, {
+        name: values.name,
+        description: values.description,
+        seller: values.seller,
+        price: parseInt(values.price),
+        imageUrl: imageUrl,
+      })
+      .then((result) => {
+        console.log(result);
+        navigate("/");
+      })
+      .catch((err) => {
+        console.error(err);
+        message.err(`에러가 발생했습니다. ${err.message}`);
+      });
   };
+  const onChangeImage = (info) => {
+    if (info.file.status === "uploading") {
+      return;
+    }
+    if (info.file.status === "done") {
+      const response = info.file.response;
+      const imageUrl = response.imageUrl;
+      setImageUrl(imageUrl);
+    }
+  };
+
   return (
     <div id="upload-container">
       <Form name="상품 업로드" onFinish={onSubmit}>
@@ -13,10 +54,22 @@ const UploadPage = () => {
           size="large"
           label={<div className="upload-label">이미지</div>}
         >
-          <div id="upload-img-placeholder">
-            <img src="/images/icons/camera.png" />
-            <span>이미지를 업로드 해주세요.</span>
-          </div>
+          <Upload
+            name="image"
+            action="http://localhost:8080/image"
+            listType="picture"
+            showUploadList={false}
+            onChange={onChangeImage}
+          >
+            {imageUrl ? (
+              <img id="upload-img" src={`http://localhost:8080/${imageUrl}`} />
+            ) : (
+              <div id="upload-img-placeholder">
+                <img src="/images/icons/camera.png" />
+                <span>이미지를 업로드해주세요.</span>
+              </div>
+            )}
+          </Upload>
         </Form.Item>
         <Divider />
         <Form.Item
@@ -72,6 +125,6 @@ const UploadPage = () => {
       </Form>
     </div>
   );
-};
+}
 
 export default UploadPage;

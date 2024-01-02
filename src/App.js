@@ -24,7 +24,7 @@ function App() {
       <div id="header">
         <div id="header-area">
           <Link to="/">
-            <img src="/images/icons/logo.png" />
+            <img src="https://i.namu.wiki/i/4kTJGvpYAXvbT44b-ePbMSkdNuwLCFEUCwWPrIcEYX1LFnemJhrYl9LZd8wWriY-ADdCS3QhPlHNsrlnnWSSfQ.svg" />
           </Link>
           <Button size="large" icon={<DownloadOutlined />} onClick={uploadPage}>
             상품 업로드
